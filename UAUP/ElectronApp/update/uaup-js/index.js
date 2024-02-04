@@ -124,8 +124,8 @@ function createDirectories(options) {
  * @returns {*} The Direct Download URL
  */
 async function GetUpdateURL(options) {
-
-    return fetch(git_api).then(response => response.json()).then(data => { json = data; }).catch(e => {
+    return options.SetupFile;
+    /*return fetch(git_api).then(response => response.json()).then(data => { json = data; }).catch(e => {
         try {
             // Electron
             console.log(`GetUpdateURL >> Something went wrong: ${e}`);
@@ -140,7 +140,7 @@ async function GetUpdateURL(options) {
             if (json['assets'][i]['name'] === `${options.appName}.zip`) zip = json['assets'][i];
         }
         return zip['browser_download_url'];
-    });
+    });*/
 }
 
 /**
@@ -161,7 +161,9 @@ async function GetUpdateVersion(options)
             return;
         }
     }).then(() => {
-        return json['electron_version'];
+        console.log(options.environment + '_version');
+        console.log(json[options.environment + '_version']);
+        return json[options.environment + '_version'];
     });
 }
 
@@ -251,7 +253,7 @@ async function Update(options = defaultOptions) {
         if (options.forceUpdate || await CheckForUpdates(options)) {
             updateHeader(options.stageTitles.Found);
             await sleep(1000);
-            let url = git_api+'.zip';//await GetUpdateURL(options);
+            let url = await GetUpdateURL(options);
             Download(url, `${options.tempDirectory}\\${options.appName}.zip`, options);
             UpdateCurrentVersion(options);
         } else {
@@ -308,6 +310,9 @@ async function CheckForUpdates(options = defaultOptions) {
  * @param {string} path - Temp Download Directory ex: /path/to/file.zip
  */
 function Download(url, path, options) {
+    console.log(url);
+    console.log(path);
+    console.log(options);
     updateHeader(options.stageTitles.Downloading)
     let received_bytes = 0;
     let total_bytes = 0;
@@ -342,6 +347,7 @@ function Download(url, path, options) {
 function Install(options) {
     updateHeader(options.stageTitles.Unzipping);
     var AdmZip = require('adm-zip');
+    console.log(`${options.tempDirectory}/${options.appName}.zip`);
     var zip = new AdmZip(`${options.tempDirectory}/${options.appName}.zip`);
 
     zip.extractAllTo(options.appDirectory, true);

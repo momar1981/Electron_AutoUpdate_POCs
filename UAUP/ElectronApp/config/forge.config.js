@@ -1,6 +1,5 @@
 const { rmSync } = require("fs");
 const path = require("path");
-const { isMac } = require("../helpers");
 
 const appName = "Edara";
 const companyName = "Edrak Software";
@@ -14,7 +13,7 @@ const loadingGifPath = path.join(__dirname, "..", loadingGif);
 module.exports = {
   packagerConfig: {
     name: appName,
-    icon: isMac() ? macIconPath : iconPath,
+    icon: iconPath,
     asar: false,
     win32metadata: {
       FileDescription: appName,

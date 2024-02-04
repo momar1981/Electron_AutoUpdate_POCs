@@ -13,7 +13,8 @@ window.onload = function()
             Cleaning: "Finalizing...", // When Removing Temp Directories and Files (ex: update archive and tmp directory).
             Launch: "Launching..." // When Launching the Application.
         };
-    const updateOptions = {gitRepo: settings.AppUrl,gitUsername: "TestUser",appName: "edara_app_win64", appExecutableName: "Edara.exe", stageTitles: defaultStages,currentVersion: settings.Version ,latestVersion: settings.AppUrl+'electron_version.json'};
+    const latestVersion =   'https://raw.githubusercontent.com/momar1981/Electron_AutoUpdate_POCs/main/UAUP/ElectronApp/autoupdate/edara_desktop_version.json';
+    const updateOptions = {gitRepo: settings.AppUrl,gitUsername: "TestUser",appName: "edara_app_win64", appExecutableName: "Edara.exe", stageTitles: defaultStages,currentVersion: settings.Version ,latestVersion: latestVersion, environment: settings.Environment};
     uaup.CheckForUpdates(updateOptions)
     .then((isUpdateAvalible) =>
     {
