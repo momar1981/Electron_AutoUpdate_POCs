@@ -124,7 +124,7 @@ function createDirectories(options) {
  * @returns {*} The Direct Download URL
  */
 async function GetUpdateURL(options) {
-    return options.SetupFile;
+    return options.setupFile;
     /*return fetch(git_api).then(response => response.json()).then(data => { json = data; }).catch(e => {
         try {
             // Electron
@@ -148,7 +148,7 @@ async function GetUpdateURL(options) {
  */
 async function GetUpdateVersion(options) 
 {
-    return fetch(options.latestVersion + '?_=' + new Date().getTime())
+    return fetch(options.latestVersionUrl + '?_=' + new Date().getTime())
     .then(response => response.json())
     .then(data => { json = data; })
     .catch(e => {
@@ -161,8 +161,6 @@ async function GetUpdateVersion(options)
             return;
         }
     }).then(() => {
-        console.log(options.environment + '_version');
-        console.log(json[options.environment + '_version']);
         return json[options.environment + '_version'];
     });
 }
@@ -203,6 +201,7 @@ function UpdateCurrentVersion(options)
         game_version: new_version,
         last_updated: Date.now().toString()
     };
+    debugger;
     fs.writeFileSync(options.versionFile, JSON.stringify(version));
 }
 //#endregion VERSIONING
@@ -310,9 +309,6 @@ async function CheckForUpdates(options = defaultOptions) {
  * @param {string} path - Temp Download Directory ex: /path/to/file.zip
  */
 function Download(url, path, options) {
-    console.log(url);
-    console.log(path);
-    console.log(options);
     updateHeader(options.stageTitles.Downloading)
     let received_bytes = 0;
     let total_bytes = 0;
