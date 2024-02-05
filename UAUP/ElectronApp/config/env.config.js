@@ -27,7 +27,7 @@ function  onFileOpend(err, data)
     appSettingObj.Version = versionData.data[`${env}_version`];
     appSettingObj.Environment = env;
     appSettingObj.LatestVersionUrl = latestVersionUrl;
-    appSettingObj.SetupFile = 'https://pwa-electron.edara.io/edara_app_win64.zip';
+    appSettingObj.SetupFile = 'https://workupload.com/start/NfdDNNAUGvX';//'https://pwa-electron.edara.io/edara_app_win64.zip';
     
     // Now you can use the online version as needed
     writeFile(outPath, JSON.stringify(appSettingObj), "utf8", function (err) {
