@@ -173,7 +173,9 @@ function GetCurrentVersion(options) {
 
     try 
     {
-        return options.currentVersion;
+        return JSON.parse(fs.readFileSync(options.versionFile, (err, data) => {
+            if (err) throw err;
+        }))['game_version'];
     }
     catch 
     {
@@ -201,7 +203,6 @@ function UpdateCurrentVersion(options)
         game_version: new_version,
         last_updated: Date.now().toString()
     };
-    debugger;
     fs.writeFileSync(options.versionFile, JSON.stringify(version));
 }
 //#endregion VERSIONING
